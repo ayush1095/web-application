@@ -1,23 +1,7 @@
 import webapp2
 form="""
 
-<html>
-  <head>
-    <title>Unit 2 Rot 13</title>
-  </head>
 
-  <body>
-    <h2>Enter some text to ROT13:</h2>
-    <form method="post">
-      <textarea name="text"
-                style="height: 100px; width: 400px;"></textarea>
-      <br>
-      <input type="submit">
-    </form>
-  </body>
-
-</html>
-"""
 def escape_html(s):
 
  for (i,o) in (("&", "&amp;"),
