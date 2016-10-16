@@ -69,7 +69,7 @@ target/
 # IPython Notebook
 .ipynb_checkpoints
 
-#Python Compiled Fil
+# Python Compiled File
 .pyc
 
 # pyenv
@@ -91,5 +91,5 @@ ENV/
 # Rope project settings
 .ropeproject
 
-# Ignor
+# Ignore
 .pub
