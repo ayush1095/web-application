@@ -70,7 +70,7 @@ target/
 .ipynb_checkpoints
 
 # Python Compiled File
-.pyc
+*.pyc
 
 # pyenv
 .python-version
