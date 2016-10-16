@@ -1,34 +1,29 @@
 import webapp2
-import cgi
-form="""
+import jinja2
+from google.appengine.ext import db
+template_dir= os.path.join(os.path.dirname(__file__),'templates')
+jinja_env= jinja2.Environment(loader=jinja2.FileSystemloader(template_dir),
+                              autoescape= True)
+def render_str(template, **params):
+     t=jinja_env.get_template(template)
+     return t.render(params)
+class BaseHandler(webapp2.RequestHandler):
+    def render(self,template,**kw):
+        self.response.out.write(render_str(template,**kw))
 
-<html>
-  <head>
-    <title>Unit 2 Rot 13</title>
-  </head>
+    def write(self,*a,**kw):
+        self.response.out.write(*a,**kw)
 
-  <body>
-    <h2>Enter some text to ROT13:</h2>
-    <form method="post" action="/testform">
-      <textarea name="text"
-                style="height: 100px; width: 400px;"></textarea>
-      <br>
-      <input type="submit">
-    </form>
-  </body>
+class Rot13(BaseHandler):
+    def get(self):
+        self.render('rot13.html')
 
-</html>
-"""
+    def post(self):
+        rot13=''
+        text=self.request.get('text')
+        if text:
+            rot13=text.encode('rot13')
 
-class MainPage(webapp2.RequestHandler):
- def get(self):
-     self.response.out.write(form)
- def escape_html(s):
-     return cgi.escape(text, quote=True)
-class TestHandler(webapp2.RequestHandler):
- def post(self):
-     text=self.request.get("text")
-     q= escape_html(text)
-     self.response.out.write(q)
-app=webapp2.WSGIApplication([('/',MainPage),('/testform',TestHandler)],
+        self.render('rot13.html',text=rot13)
+app=webapp2.WSGIApplication([('/rot13',Rot13)],
                             debug=True)
