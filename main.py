@@ -23,7 +23,16 @@ class Rot13(BaseHandler):
         text=self.request.get('text')
         if text:
             rot13=text.encode('rot13')
+class Welcome(BaseHandler):
+    def get(self):
+        username=self.request.get('username')
+        if valid_username(username):
+            self.render('welcome.html',username=username)
+        else:
+            self.redirect('/signup')
 
         self.render('rot13.html',text=rot13)
-app=webapp2.WSGIApplication([('/rot13',Rot13)],
+app=webapp2.WSGIApplication([('/rot13',Rot13),
+                             ('/signup',Signup),
+                             ('/welcome',Welcome)],
                             debug=True)
