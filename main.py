@@ -1,3 +1,4 @@
+import os
 import webapp2
 import jinja2
 from google.appengine.ext import db
@@ -8,8 +9,8 @@ def render_str(template, **params):
      t=jinja_env.get_template(template)
      return t.render(params)
 class BaseHandler(webapp2.RequestHandler):
-    def render(self,template,**kw):
-        self.response.out.write(render_str(template,**kw))
+    def render(self, template, **kw):
+        self.response.out.write(render_str(template, **kw))
 
     def write(self,*a,**kw):
         self.response.out.write(*a,**kw)
@@ -23,6 +24,8 @@ class Rot13(BaseHandler):
         text=self.request.get('text')
         if text:
             rot13=text.encode('rot13')
+        self.render('rot13.html',text=rot13)
+
 class Welcome(BaseHandler):
     def get(self):
         username=self.request.get('username')
