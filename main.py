@@ -25,7 +25,19 @@ class Rot13(BaseHandler):
         if text:
             rot13=text.encode('rot13')
         self.render('rot13.html',text=rot13)
+class Signup(BaseHandler):
+    def get(self):
+        self.render("signup.html")
 
+    def post(self):
+        have_error=False
+        username=self.request.get('username')
+        password=self.request.get('password')
+        verify=self.request.get('verify')
+        email=self.request.get('email')
+
+        params=dict(username=username,
+                    email=email)
 class Welcome(BaseHandler):
     def get(self):
         username=self.request.get('username')
