@@ -25,6 +25,23 @@ class Rot13(BaseHandler):
         if text:
             rot13=text.encode('rot13')
         self.render('rot13.html',text=rot13)
+
+USER_RE = re.compile(r"^[a-zA-Z0-9_-]{3,20}$")
+def valid_username(username):
+    return username and USER_RE.match(username)
+
+
+PASS_RE = re.compile(r"^.{3,20}$")
+def valid_password(password):
+    return password and PASS_RE.match(password)
+
+EMAIl_RE = re.compile(r'^[\s]+@[\s]+\.[\s]+$')
+def valid_email(email):
+    return not email or EMAIl_RE.match(email)
+
+
+
+
 class Signup(BaseHandler):
     def get(self):
         self.render("signup.html")
@@ -38,6 +55,13 @@ class Signup(BaseHandler):
 
         params=dict(username=username,
                     email=email)
+
+
+''' functions valid_username, valid_email, valid_password yet to be declared '''
+
+
+
+
 class Welcome(BaseHandler):
     def get(self):
         username=self.request.get('username')
